@@ -37,10 +37,10 @@ public class Popup extends JFrame {
 	private Board board = new Board();
 	private Board1 board1 = new Board1();
 	private Home home = new Home();
-	private Email email = new Email();
-	private Email1 email1 = new Email1();
-	private Email2 email2 = new Email2();
-	private Email3 email3 = new Email3();
+	//private Email email = new Email();
+	//private Email1 email1 = new Email1();
+	//private Email2 email2 = new Email2();
+	//private Email3 email3 = new Email3();
 	
 	private CardLayout card = new CardLayout();
 	
@@ -233,7 +233,7 @@ public class Popup extends JFrame {
 				card.show(contentPanel, "mychange");
 			}
 		});	
-		post6.addActionListener(new ActionListener() {			
+		/*post6.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				contentPanel.add(email, "email");
@@ -261,7 +261,7 @@ public class Popup extends JFrame {
 				card.show(contentPanel, "email3");
 			}
 		});
-
+*/
 		exit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
