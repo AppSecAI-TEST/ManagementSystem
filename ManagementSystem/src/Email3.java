@@ -21,6 +21,7 @@ class Email3 extends JPanel {
 	private JPanel northPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
 	private JPanel southPanel = new JPanel();
+	private JButton button = new JButton("昏力");
 	String header[] = { "No.", "力格", "朝楼"};
 	Object contents[][] = { { "1", "力格1", "0000-00-00"}, { "2", "力格2", "0000-00-00"} };
 	private DefaultTableModel model;
@@ -38,18 +39,18 @@ class Email3 extends JPanel {
 		setLayout(new BorderLayout());
 		subject.setFont(new Font("HY斑绊雕", Font.BOLD, 20));
 		this.add(subject,BorderLayout.NORTH);
-		centerPanel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
-		centerPanel.setLayout(new BorderLayout(5, 5));
+		centerPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+		centerPanel.setLayout(new BorderLayout(3, 5));
 		this.table.getTableHeader().setResizingAllowed(false);
 		this.table.getTableHeader().setReorderingAllowed(false);
 		this.model.addRow(contents[0]);
 		this.model.addRow(contents[1]);
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		this.table.getColumnModel().getColumn(0).setPreferredWidth(10);
 		this.table.getColumnModel().getColumn(1).setPreferredWidth(300);
 		this.table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		this.table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		this.scroll = new JScrollPane(table);
 		centerPanel.add(scroll, BorderLayout.CENTER);
+		this.southPanel.add(button);
 		this.add(centerPanel, BorderLayout.CENTER);
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
