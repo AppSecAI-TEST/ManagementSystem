@@ -69,7 +69,7 @@ public class Popup extends JFrame {
 	private JMenuItem post6 = new JMenuItem("메일작성");
 	private JMenuItem post7 = new JMenuItem("받은메일함");
 	private JMenuItem post8 = new JMenuItem("보낸메일함");
-	private JMenuItem post9 = new JMenuItem("삭제된메일");
+	private JMenuItem post9 = new JMenuItem("휴지통");
 
 	private Point compCoords = null;
 

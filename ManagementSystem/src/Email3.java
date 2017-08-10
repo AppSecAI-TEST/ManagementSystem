@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 class Email3 extends JPanel {
 	Email3 self = this;
 	CardLayout ca;
-	JLabel subject = new JLabel("삭제된메일", JLabel.LEFT);
+	JLabel subject = new JLabel("휴지통", JLabel.LEFT);
 	private JPanel panel = new JPanel();
 	private JPanel northPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
@@ -32,21 +32,25 @@ class Email3 extends JPanel {
 	private JTable table = new JTable();
 	private JScrollPane scroll;
 	public void compInit() {
-		DefaultTableCellRenderer dcr = new DefaultTableCellRenderer()
-		 {
-		  public Component getTableCellRendererComponent
-		   (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-		  {
-		   chk.setSelected(((Boolean)value).booleanValue());  
-		   chk.setHorizontalAlignment(JLabel.CENTER);
-		   return chk;
-		  }
-		 };
 		model = new DefaultTableModel(header, 0) {
-
 			public boolean isCellEditable(int row, int col) {
-				return false;
+				if (col > 0)
+					return false;
+				else
+					return true;
 			}
+
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				switch (columnIndex) {
+				case 0:
+					return Boolean.class;
+				default:
+					return String.class;
+				}
+
+			}
+
 		};
 		this.table = new JTable(model);
 		setLayout(new BorderLayout());
@@ -58,8 +62,6 @@ class Email3 extends JPanel {
 		this.table.getTableHeader().setReorderingAllowed(false);
 		this.model.addRow(contents[0]);
 		this.model.addRow(contents[1]);
-		table.getColumn("").setCellRenderer(dcr);
-		table.getColumn("").setCellEditor(new DefaultCellEditor(chk));
 		this.table.getColumnModel().getColumn(0).setPreferredWidth(30);
 		this.table.getColumnModel().getColumn(1).setPreferredWidth(30);
 		this.table.getColumnModel().getColumn(2).setPreferredWidth(500);
@@ -69,6 +71,7 @@ class Email3 extends JPanel {
 		this.southPanel.add(button);
 		this.add(centerPanel, BorderLayout.CENTER);
 		this.add(southPanel, BorderLayout.SOUTH);
+		table.getModel().addTableModelListener(new CheckBoxModelListener());
 	}
 
 	public Email3() {

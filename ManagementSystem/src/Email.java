@@ -62,13 +62,13 @@ public class Email extends JPanel{
 		c.gridy = 1;c.gridx = 3;
 		this.add(addressbook, c);
 		c.gridy = 2;c.gridx = 1;
-		this.add(TitleL, c);
-		c.gridy = 2;c.gridx = 2;
-		this.add(titleL, c);
-		c.gridy = 3;c.gridx = 1;
 		this.add(Reference, c);
-		c.gridy = 3;c.gridx = 2;
+		c.gridy = 2;c.gridx = 2;
 		this.add(reference, c);
+		c.gridy = 3;c.gridx = 1;
+		this.add(TitleL, c);
+		c.gridy = 3;c.gridx = 2;
+		this.add(titleL, c);
 		c.gridy = 4;c.gridx = 1;
 		this.add(Attached, c);
 		c.gridy = 4;c.gridx = 2;
