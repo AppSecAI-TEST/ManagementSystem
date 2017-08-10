@@ -12,10 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class NewBoard extends JFrame{
+public class NewBoard extends JFrame {
 	NewBoard self = this;
 	private JLabel label1 = new JLabel("제목");
 	private JLabel label2 = new JLabel("작성자");
@@ -23,67 +24,81 @@ public class NewBoard extends JFrame{
 	private JTextField txt1 = new JTextField();
 	private JTextField txt2 = new JTextField();
 	private JTextField txt3 = new JTextField();
-	private JTextArea txtA = new JTextArea();
-	private JButton btn = new JButton("뒤로가기");
-	private JButton btn1 = new JButton("첨부파일");
-	private JButton btn2 = new JButton("저장");
+	private JTextArea txtA = new JTextArea(20,40);
+	private JButton backB = new JButton("뒤로가기");
+	private JButton fileB = new JButton("첨부파일");
+	private JButton saveB = new JButton("저장");
 	private JPanel panel1 = new JPanel(new GridBagLayout());
+	private JPanel panel2 = new JPanel();
+	private JPanel areaPanel = new JPanel();
+	private JScrollPane scroll;
 	private FileDialog fileOpen;
-	
-	public void compInit(){
-		
+
+	public void compInit() {
 		this.setLayout(new BorderLayout());
-		GridBagConstraints c =new GridBagConstraints();
-		c.insets = new Insets(20,20,0,0);
-		
-		c.gridy = 1; c.gridx = 1;
-		this.panel1.add(label1,c);
-		c.gridy = 1; c.gridx = 2;
-		this.panel1.add(txt1,c);
-		
-		c.gridy = 2; c.gridx = 1;
-		this.panel1.add(label2,c);
-		c.gridy = 2; c.gridx = 2;
-		this.panel1.add(txt2,c);
-		
-		c.gridy = 3; c.gridx = 1;
-		this.panel1.add(label3,c);
-		c.gridy = 3; c.gridx = 2;
-		this.panel1.add(txtA,c);
-		
-		c.gridy = 4; c.gridx = 1;
-		
-		this.panel1.add(btn1,c);
-		
-		c.gridy = 4; c.gridx = 2;
-		this.panel1.add(txt3,c);
-		
-		txtA.setBackground(Color.gray);
+		scroll = new JScrollPane(txtA);
+
+		areaPanel.add(scroll, BorderLayout.CENTER);
 		label1.setPreferredSize(new Dimension(100, 50));
 		label2.setPreferredSize(new Dimension(100, 50));
 		label3.setPreferredSize(new Dimension(100, 50));
 		txt1.setPreferredSize(new Dimension(400, 25));
 		txt2.setPreferredSize(new Dimension(100, 25));
 		txt3.setPreferredSize(new Dimension(400, 25));
-		txtA.setPreferredSize(new Dimension(400, 350));
-		fileOpen = new FileDialog(this,"파일열기",FileDialog.LOAD);
-		btn1.setPreferredSize(new Dimension(90,25));
+		fileOpen = new FileDialog(this, "파일열기", FileDialog.LOAD);
+		fileB.setPreferredSize(new Dimension(90, 25));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(20, 20, 0, 0);
+
+		c.gridy = 1;
+		c.gridx = 1;
+		this.panel1.add(label1, c);
+		c.gridy = 1;
+		c.gridx = 2;
+		this.panel1.add(txt1, c);
+
+		c.gridy = 2;
+		c.gridx = 1;
+		this.panel1.add(label2, c);
+		c.gridy = 2;
+		c.gridx = 2;
+		this.panel1.add(txt2, c);
+
+		c.gridy = 3;
+		c.gridx = 1;
+		this.panel1.add(label3, c);
+		c.gridy = 3;
+		c.gridx = 2;
+		this.panel1.add(scroll, c);
+
+		c.gridy = 4;
+		c.gridx = 1;
+		this.panel1.add(fileB, c);
+		c.gridy = 4;
+		c.gridx = 2;
+		this.panel1.add(txt3, c);
+
 		this.add(panel1, BorderLayout.NORTH);
+		panel2.setPreferredSize(new Dimension(400, 30));
+		this.panel2.add(saveB, BorderLayout.EAST);
+		this.panel2.add(backB, BorderLayout.EAST);
+		this.add(panel2, BorderLayout.EAST);
 	}
-	
-	public void eventInit(){
-		this.btn1.addActionListener(new ActionListener() {
+
+	public void eventInit() {
+		this.fileB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileOpen.setDirectory("d:");
 				fileOpen.setVisible(true);
-				String s= fileOpen.getDirectory()+fileOpen.getFile();
+				String s = fileOpen.getDirectory() + fileOpen.getFile();
 				txt3.setText(s);
 			}
 		});
 	}
-	
-	public NewBoard(){
-		this.setSize(800, 700);
+
+	public NewBoard() {
+		this.setSize(800, 650);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.compInit();
@@ -91,7 +106,7 @@ public class NewBoard extends JFrame{
 		this.setResizable(false);
 		this.setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
 		new NewBoard();
 	}
