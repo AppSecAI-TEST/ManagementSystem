@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
-
+//Test
 public class DBManager {
 	public Connection getConnection() throws Exception{
 		Class.forName("oracle.jdbc.driver.OracleDriver");
