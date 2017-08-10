@@ -36,6 +36,7 @@ public class Popup extends JFrame {
 	private Report report = new Report();
 	private Board board = new Board();
 	private Board1 board1 = new Board1();
+	private Board2 board2 = new Board2();
 	private Home home = new Home();
 	private Email email = new Email();
 	private Email1 email1 = new Email1();
@@ -212,7 +213,7 @@ public class Popup extends JFrame {
 		post3.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				contentPanel.add(report, "border3");
+				contentPanel.add(board2, "border3");
 				card.show(contentPanel, "border3");
 			}
 		});	
