@@ -39,6 +39,7 @@ public class Popup extends JFrame {
 	private Home home = new Home();
 	private Email email = new Email();
 	private Email1 email1 = new Email1();
+	private Email2 email2 = new Email2();
 	
 	private CardLayout card = new CardLayout();
 	
@@ -234,17 +235,24 @@ public class Popup extends JFrame {
 		post6.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				contentPanel.add(email, "mychange");
-				card.show(contentPanel, "mychange");
+				contentPanel.add(email, "email");
+				card.show(contentPanel, "email");
 			}
 		});	
 		post7.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				contentPanel.add(email1, "mychange");
-				card.show(contentPanel, "mychange");
+				contentPanel.add(email1, "email1");
+				card.show(contentPanel, "email1");
 			}
 		});	
+		post8.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPanel.add(email2, "email2");
+				card.show(contentPanel, "email2");
+			}
+		});
 
 		exit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
