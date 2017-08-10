@@ -42,8 +42,7 @@ public class Popup extends JFrame {
 	private Email2 email2 = new Email2();
 	private Email3 email3 = new Email3();
 	
-	private CardLayout card = new CardLayout();
-	
+	private CardLayout card = new CardLayout();	
 	private JPopupMenu popup1 = new JPopupMenu();
 	private JPopupMenu popup2 = new JPopupMenu();
 	private JPopupMenu popup3 = new JPopupMenu();

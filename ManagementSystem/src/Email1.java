@@ -1,14 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Checkbox;
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 class Email1 extends JPanel {
 	Email1 self = this;
@@ -19,15 +23,24 @@ class Email1 extends JPanel {
 	private JPanel centerPanel = new JPanel();
 	private JPanel southPanel = new JPanel();
 	private JButton button = new JButton("삭제");
-	Checkbox chk = new Checkbox();
-	String header[] = { "No.", "제목", "보낸사람", "날짜" };
-	Object contents[][] = { { "1", "제목1", "홍길동", "0000-00-00"}, { "2", "제목2", "마이콜", "0000-00-00" } };
+	JCheckBox chk = new JCheckBox();
+	String header[] = {"", "No.", "제목", "보낸사람", "날짜" };
+	Object contents[][] = { { Boolean.FALSE,"1", "제목1", "홍길동", "0000-00-00"}, { Boolean.FALSE,"2", "제목2", "마이콜", "0000-00-00" } };
 	private DefaultTableModel model;
 	private JTable table = new JTable();
 	private JScrollPane scroll;
 	
-	
 	public void compInit() {
+		DefaultTableCellRenderer dcr = new DefaultTableCellRenderer()
+		 {
+		  public Component getTableCellRendererComponent
+		   (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		  {
+		   chk.setSelected(((Boolean)value).booleanValue());  
+		   chk.setHorizontalAlignment(JLabel.CENTER);
+		   return chk;
+		  }
+		 };
 		model = new DefaultTableModel(header, 0){
 			public boolean isCellEditable(int row, int col){
 				return false;
@@ -43,14 +56,19 @@ class Email1 extends JPanel {
 		this.table.getTableHeader().setReorderingAllowed(false);
 		this.model.addRow(contents[0]);
 		this.model.addRow(contents[1]);
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(50);
-		this.table.getColumnModel().getColumn(1).setPreferredWidth(300);
-		this.table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumn("").setCellRenderer(dcr);
+		table.getColumn("").setCellEditor(new DefaultCellEditor(chk));
+		this.table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		this.table.getColumnModel().getColumn(1).setPreferredWidth(15);
+		this.table.getColumnModel().getColumn(2).setPreferredWidth(450);
+		this.table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		this.table.getColumnModel().getColumn(3).setPreferredWidth(150);
 		this.scroll = new JScrollPane(table);
 		centerPanel.add(scroll, BorderLayout.CENTER);
 		this.southPanel.add(button);
 		this.add(centerPanel, BorderLayout.CENTER);
 		this.add(southPanel, BorderLayout.SOUTH);
+		
 	}
 
 	public Email1() {
