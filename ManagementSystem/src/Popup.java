@@ -40,6 +40,7 @@ public class Popup extends JFrame {
 	private Email email = new Email();
 	private Email1 email1 = new Email1();
 	private Email2 email2 = new Email2();
+	private Email3 email3 = new Email3();
 	
 	private CardLayout card = new CardLayout();
 	
@@ -251,6 +252,13 @@ public class Popup extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				contentPanel.add(email2, "email2");
 				card.show(contentPanel, "email2");
+			}
+		});
+		post9.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPanel.add(email3, "email3");
+				card.show(contentPanel, "email3");
 			}
 		});
 
