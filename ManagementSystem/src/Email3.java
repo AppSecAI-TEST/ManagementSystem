@@ -21,8 +21,8 @@ class Email3 extends JPanel {
 	private JPanel northPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
 	private JPanel southPanel = new JPanel();
-	String header[] = { "No.", "力格", "朝楼", "炼雀荐" };
-	Object contents[][] = { { "1", "力格1", "0000-00-00", "001" }, { "2", "力格2", "0000-00-00", "002" } };
+	String header[] = { "No.", "力格", "朝楼"};
+	Object contents[][] = { { "1", "力格1", "0000-00-00"}, { "2", "力格2", "0000-00-00"} };
 	private DefaultTableModel model;
 	private JTable table = new JTable();
 	private JScrollPane scroll;
