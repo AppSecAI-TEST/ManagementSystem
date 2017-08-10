@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class NewBoard extends JFrame {
+public class NewBoard extends JDialog {
 	NewBoard self = this;
 	private JLabel label1 = new JLabel("제목");
 	private JLabel label2 = new JLabel("작성자");
@@ -25,7 +26,7 @@ public class NewBoard extends JFrame {
 	private JTextField txt2 = new JTextField();
 	private JTextField txt3 = new JTextField();
 	private JTextArea txtA = new JTextArea(20,40);
-	private JButton backB = new JButton("뒤로가기");
+	private JButton backB = new JButton("나가기");
 	private JButton fileB = new JButton("첨부파일");
 	private JButton saveB = new JButton("저장");
 	private JPanel panel1 = new JPanel(new GridBagLayout());
@@ -95,19 +96,20 @@ public class NewBoard extends JFrame {
 				txt3.setText(s);
 			}
 		});
+		
+		this.backB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 	}
 
-	public NewBoard() {
+	public NewBoard(Board1 b1) {
 		this.setSize(800, 650);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(b1);
 		this.compInit();
 		this.eventInit();
 		this.setResizable(false);
-		this.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new NewBoard();
-	}
 }

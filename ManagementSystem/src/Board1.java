@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 class Board1 extends JPanel {
 	Board1 self = this;
-	CardLayout ca;
+	private CardLayout card = new CardLayout();
 	JLabel subject = new JLabel("자유게시판", JLabel.LEFT);
 	private JPanel panel = new JPanel();
 	private JPanel northPanel = new JPanel();
@@ -35,7 +37,7 @@ class Board1 extends JPanel {
 	
 	
 	public void compInit() {
-		//setLayout(ca = new CardLayout());
+		
 		model = new DefaultTableModel(header, 0){
 			public boolean isCellEditable(int row, int col){
 				return false;
@@ -47,7 +49,6 @@ class Board1 extends JPanel {
 		this.add(subject,BorderLayout.NORTH);
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(100, 69, 150, 40));
 		centerPanel.setLayout(new BorderLayout(5, 5));
-		//centerPanel.add(label, BorderLayout.WEST);
 		this.table.getTableHeader().setResizingAllowed(false);
 		this.table.getTableHeader().setReorderingAllowed(false);
 		this.model.addRow(contents[0]);
@@ -68,11 +69,20 @@ class Board1 extends JPanel {
 		this.add(centerPanel, BorderLayout.CENTER);
 		this.add(southPanel, BorderLayout.SOUTH);
 	}
+	
+	public void eventInit(){
+		this.newFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewBoard newboard = new NewBoard(self);
+				newboard.setVisible(true);
+				}
+		});
+	}
 
 	public Board1() {
 		this.setSize(800, 700);
+		this.eventInit();
 		this.compInit();
-		//this.setResizable(false);
 		this.setVisible(true);
 	}
 }
