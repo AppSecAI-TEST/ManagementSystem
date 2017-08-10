@@ -37,11 +37,14 @@ public class Popup extends JFrame {
 	private Board board = new Board();
 	private Board1 board1 = new Board1();
 	private Home home = new Home();
+	private Email email = new Email();
+	private Email1 email1 = new Email1();
 	
 	private CardLayout card = new CardLayout();
 	
 	private JPopupMenu popup1 = new JPopupMenu();
 	private JPopupMenu popup2 = new JPopupMenu();
+	private JPopupMenu popup3 = new JPopupMenu();
 	
 	private JPanel menuPanel = new JPanel();
 	
@@ -62,6 +65,10 @@ public class Popup extends JFrame {
 	private JMenuItem post3 = new JMenuItem("자료실");
 	private JMenuItem post4 = new JMenuItem("로그아웃");
 	private JMenuItem post5 = new JMenuItem("회원정보변경");
+	private JMenuItem post6 = new JMenuItem("메일작성");
+	private JMenuItem post7 = new JMenuItem("받은메일함");
+	private JMenuItem post8 = new JMenuItem("보낸메일함");
+	private JMenuItem post9 = new JMenuItem("삭제된메일");
 
 	private Point compCoords = null;
 
@@ -79,12 +86,17 @@ public class Popup extends JFrame {
 	public void menuBar() {
 		add(popup1);
 		add(popup2);
+		add(popup3);
 		
 		popup1.add(post1);
 		popup1.add(post2);
 		popup1.add(post3);		
 		popup2.add(post4);
 		popup2.add(post5);
+		popup3.add(post6);
+		popup3.add(post7);
+		popup3.add(post8);
+		popup3.add(post9);
 		
 		menuPanel.setPreferredSize(new Dimension(900, 35));
 		b1.setPreferredSize(new Dimension(50, 30));
@@ -166,11 +178,9 @@ public class Popup extends JFrame {
 			}
 		});
 		
-		b3.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				contentPanel.add(report, "mail");
-				card.show(contentPanel, "mail");
+		b3.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e){
+				popup3.show(e.getComponent(),30,30);
 			}
 		});
 		
@@ -218,6 +228,20 @@ public class Popup extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				contentPanel.add(report, "mychange");
+				card.show(contentPanel, "mychange");
+			}
+		});	
+		post6.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPanel.add(email, "mychange");
+				card.show(contentPanel, "mychange");
+			}
+		});	
+		post7.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPanel.add(email1, "mychange");
 				card.show(contentPanel, "mychange");
 			}
 		});	
