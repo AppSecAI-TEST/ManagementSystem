@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-//제발!!!
+//제발!!!????????
 class Board extends JPanel {
 	Board self = this;
 	CardLayout ca;
