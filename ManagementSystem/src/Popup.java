@@ -61,17 +61,6 @@ public class Popup extends JFrame {
 
 	private Point compCoords = null;
 
-	public Popup() {
-		this.setSize(900,600);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(Popup.EXIT_ON_CLOSE);
-		this.setUndecorated(true); // 타이틀바제거
-		this.compInit();
-		this.eventInit();
-		this.setResizable(false);
-		this.setVisible(true);
-	}
-
 	public void menuBar() {
 		add(popup1);
 		add(popup2);
@@ -288,8 +277,19 @@ public class Popup extends JFrame {
 		});
 	}
 
+	public Popup(Login login) {
+		this.setSize(900,600);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(Popup.EXIT_ON_CLOSE);
+		this.setUndecorated(true); // 타이틀바제거
+		this.compInit();
+		this.eventInit();
+		this.setResizable(false);
+		this.setVisible(true);
+	}
+	
 	public static void main(String[] args) {
-		new Popup();
+		new Popup(null);
 	}
 
 }
