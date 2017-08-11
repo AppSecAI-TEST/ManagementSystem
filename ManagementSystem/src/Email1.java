@@ -25,9 +25,9 @@ class Email1 extends JPanel {
 	private JPanel southPanel = new JPanel();
 	private JButton button = new JButton("삭제");
 	JCheckBox chk = new JCheckBox();
-	String header[] = { "", "No.", "제목", "보낸사람", "날짜" };
-	Object contents[][] = { { false, "1", "제목1", "홍길동", "0000-00-00" },
-			{ Boolean.FALSE, "2", "제목2", "마이콜", "0000-00-00" } };
+	String header[] = { "", "No.", "보낸사람", "제목", "날짜" };
+	Object contents[][] = { { false, "1", "홍길동", "제목1", "0000-00-00" },
+			{ Boolean.FALSE, "2", "마이콜", "제목2", "0000-00-00" } };
 	private DefaultTableModel model;
 	private JTable table = new JTable();
 	private JScrollPane scroll;
