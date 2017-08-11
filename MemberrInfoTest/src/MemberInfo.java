@@ -3,9 +3,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
@@ -14,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,6 +34,7 @@ public class MemberInfo extends JFrame {
 	MemberInfo self = this;
 	private DBManager db = new DBManager();
 
+	private int tmp = 0;
 	private JPanel searchPanel = new JPanel(new BorderLayout());
 	private JPanel searchSubPanel = new JPanel(new GridBagLayout());
 	private JPanel addPanel = new JPanel(new BorderLayout());
@@ -268,6 +273,10 @@ public class MemberInfo extends JFrame {
 				Boolean checked = (Boolean) model.getValueAt(row, column);
 
 				if (checked) {
+					if(tmp==1){
+						model2.setRowCount(0);
+						tmp=0;
+					}
 					memberAddInit(deptName);
 				} else {
 					memberRemoveInit(deptName);
@@ -322,6 +331,38 @@ public class MemberInfo extends JFrame {
 	}
 
 	public void eventInit() {
+		searchButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(deptText.getText().equals("")&&rankText.getText().equals("")&&nameText.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "검색조건을 넣어주세요");
+				}else{
+				String msg="";
+				if(!deptText.getText().equals(""))
+					msg+="and dept like '%"+deptText.getText()+"%'";
+				if(!rankText.getText().equals(""))
+					msg+="and rank like '%"+rankText.getText()+"%'";
+				if(!nameText.getText().equals(""))
+					msg+="and name like '%"+nameText.getText()+"%'";
+				
+				msg+="";
+				try {			
+					for(int i=0;i<model.getRowCount();i++){
+						model.setValueAt(false, i, 1);
+					}
+					model2.setRowCount(0); //table에서 row전체삭제
+					for (Member m : db.searchData(msg)) {
+						model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
+					}
+					tmp=1;
+					
+				} catch (Exception e1) {
+				}
+				
+				}
+				
+			}
+		});
 
 	}
 

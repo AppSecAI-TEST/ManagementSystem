@@ -59,7 +59,7 @@ public class DBManager {
 	
 	
 	
-	//부서가져오기
+	//부서에 따라 사람 가져오기
 		public ArrayList<Member> selectData(String department) throws Exception {
 			Connection con = this.getConnection();
 			
@@ -68,7 +68,6 @@ public class DBManager {
 			ArrayList<Member> result = new ArrayList<Member>();
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			
 			pstmt.setString(1,department);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
@@ -86,6 +85,37 @@ public class DBManager {
 			}
 			con.close();
 			return result;
+		}
+		
+		//검색 
+		public ArrayList<Member> searchData(String msg) throws Exception  {
+				Connection con = this.getConnection();
+				
+				String sql = "select * from person where 1=1 ";
+				
+				ArrayList<Member> result = new ArrayList<Member>();
+				System.out.println(msg);
+				
+				sql += msg;
+				System.out.println(sql);
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()){
+					String dept = rs.getString("dept");
+					String rank = rs.getString("rank");
+					String name = rs.getString("name");
+					String s = rs.getString("checkbox");
+					Boolean check;
+					if(s.equals("true")){
+						check = true;
+					}else
+						check = false;
+					result.add(new Member(dept,rank,name,check)); 
+					
+				}
+				con.close();
+				return result;
+			
 		}
 	
 	
