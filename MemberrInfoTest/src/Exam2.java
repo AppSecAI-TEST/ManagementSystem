@@ -32,7 +32,7 @@ public class Exam2 extends JFrame {
 	private JPanel deptPanel = new JPanel(new BorderLayout());
 	private JPanel memberPanel = new JPanel(new BorderLayout());
 	private String[] columnNames = { "부서", "부서전체전송" };
-	private Object[][] data = { { "영업부", false }, { "인사부", false }, { "마케팅부", false }, { "개발부", false } };
+	private Object[][] data = { { "영업부", false }, { "인사부", false }, { "마케팅부", false }, { "개발부", false } }; //나중에 이부분도 db에서 처리해야함(부서종류뽑아오기)
 	private JTable table;
 	private DefaultTableModel model;
 	private JScrollPane scroll;
@@ -69,14 +69,29 @@ public class Exam2 extends JFrame {
 		memberPanel.add(scroll2, BorderLayout.CENTER);
 	}
 
-	private void addInit(String checkDept) {
+	private void memberAddInit(String checkDept) {
 		try {
-			model2.setRowCount(0);
+			//model2.setRowCount(0); //table에서 row전체삭제
 			for (Member m : db.selectData(checkDept)) {
 				model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 			}
 		} catch (Exception e) {
 
+		}
+	}	
+	
+	private void memberRemoveInit(String checkDept){
+		try{
+		int count = db.selectDeptPerson(checkDept);	
+		int startRow = model2.getRowCount()-1;
+		
+		while(count>0){
+			model2.removeRow(startRow);
+			startRow--;
+			count--;
+		}
+		}catch(Exception e){
+			
 		}
 	}
 
@@ -178,7 +193,9 @@ public class Exam2 extends JFrame {
 				Boolean checked = (Boolean) model.getValueAt(row, column);
 
 				if (checked) {
-					addInit(deptName);
+					memberAddInit(deptName);
+				}else{
+					memberRemoveInit(deptName);
 				}
 			}
 		}
@@ -230,16 +247,12 @@ public class Exam2 extends JFrame {
 
 	}
 
-	private void eventInit() {
-
-	}
 
 	public Exam2() {
 		this.setSize(900, 200);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.compInit();
-		this.eventInit();
 		this.setResizable(false);
 		this.setVisible(true);
 	}

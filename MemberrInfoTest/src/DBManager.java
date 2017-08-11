@@ -39,6 +39,26 @@ public class DBManager {
 		return result;
 	}
 	
+	//부서당 사원수 가져오기
+			public int selectDeptPerson(String department) throws Exception {
+				Connection con = this.getConnection();
+				
+				String sql = "select count(*) from person where dept = ?";
+				
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1,department);
+				ResultSet rs = pstmt.executeQuery();
+				int count=0;
+				if(rs.next()){
+					count = rs.getInt(1);
+				}
+				con.close();
+				return count;
+			}
+	
+	
+	
 	//부서가져오기
 		public ArrayList<Member> selectData(String department) throws Exception {
 			Connection con = this.getConnection();
