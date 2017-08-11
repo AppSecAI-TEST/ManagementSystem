@@ -11,11 +11,13 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -25,10 +27,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
+//a
 public class Email extends JPanel{
 	Email self = this;
 	CardLayout ca;
+	private JFrame frm = new JFrame();
 	private JPanel panel = new JPanel();
 	private JPanel northPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
@@ -44,13 +47,12 @@ public class Email extends JPanel{
 	private JLabel Attached = new JLabel("첨부파일");
 	private JButton AttachedFile = new JButton(new ImageIcon("C:/Users/ITBANK403-15/Pictures/c.jpg"));
 	private JTextField Attachedfile = new JTextField(59);
-	private FileDialog attachedfile;
+	private JFileChooser fileChooser = new JFileChooser();
 	private JLabel Text = new JLabel("내용  ");
 	private JTextArea text = new JTextArea(17, 59);
 	private JScrollPane scroll = new JScrollPane(text);
 	private JButton send = new JButton("전송");
 	
-	//a
 	public void compInit() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -83,13 +85,30 @@ public class Email extends JPanel{
 		this.add(send, c);
 	}
 	public void eventInit(){
+		this.AttachedFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setCurrentDirectory(new File("c:/"));
+				if(e.getSource() == AttachedFile)
+		        {
+		            int returnVal = fileChooser.showOpenDialog(frm);
+		            if( returnVal == JFileChooser.APPROVE_OPTION)
+		            {
+		                File file = fileChooser.getSelectedFile();
+		                Attachedfile.setText(file.toString());
+		            }
+		            else
+		            {
+		            	Attachedfile.setText("파일을 열지 못했습니다");
+		            }
+		        }
+				
+			}
+		});
 	}
-
 	public Email() {
 		this.setSize(800, 700);
 		this.compInit();
 		this.eventInit();
 		this.setVisible(true);
 	}
-
 }
