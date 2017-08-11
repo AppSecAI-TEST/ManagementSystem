@@ -15,6 +15,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Login extends JFrame{
+	
+	DBManager db = new DBManager();
+	
 	Login self = this;
 	private JLabel ID = new JLabel("아이디: ");
 	private JLabel PassWord = new JLabel("패스워드: ");
@@ -25,6 +28,12 @@ public class Login extends JFrame{
 		login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//new Home(self).setVisible(true);
+				try {
+					db.getData();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
