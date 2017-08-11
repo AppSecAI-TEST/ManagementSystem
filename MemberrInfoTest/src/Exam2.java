@@ -23,6 +23,9 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 public class Exam2 extends JFrame {
@@ -40,6 +43,7 @@ public class Exam2 extends JFrame {
 	private DefaultTableModel model2;
 	private JScrollPane scroll2;
 	private JCheckBox box2 = new JCheckBox();
+	private JTableHeader header;
 
 	private DBManager db = new DBManager();
 
@@ -58,8 +62,9 @@ public class Exam2 extends JFrame {
 		table2 = new JTable(model2);
 		scroll2 = new JScrollPane(table2);
 
-		table2.getModel().addTableModelListener(new CheckBoxModelListener2());
+		table2.getColumnModel().getColumn(3).setHeaderRenderer(new HeaderRenderer(table2.getTableHeader(), model2));
 
+		System.out.println("테이블 update");
 		model2.fireTableDataChanged();
 		memberPanel.add(scroll2, BorderLayout.CENTER);
 	}
@@ -97,6 +102,64 @@ public class Exam2 extends JFrame {
 
 	}
 
+	class HeaderRenderer implements TableCellRenderer{
+		private final JCheckBox check = new JCheckBox();
+		private TableModel model2;
+
+		public HeaderRenderer(JTableHeader header, TableModel model2) {
+			this.model2 = model2;
+		    check.setOpaque(false);
+		    check.setFont(header.getFont());
+		    header.addMouseListener(new MouseAdapter() {
+		        @Override
+		        public void mouseClicked(MouseEvent e) {
+		            JTable table = ((JTableHeader) e.getSource()).getTable();
+		            TableColumnModel columnModel = table.getColumnModel();
+		            int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+		            int modelColumn = table.convertColumnIndexToModel(viewColumn);
+		            if (modelColumn == 3) {		            	
+		                check.setSelected(!check.isSelected()); //지금선택의 반대로 true/false변경
+		                TableModel m = table.getModel();
+		                Boolean f = check.isSelected();
+		                for (int i = 0; i < m.getRowCount(); i++) {
+		                    m.setValueAt(f, i, 3);     
+		                }
+		                if(check.isSelected()==true){
+		                	System.out.println("선택되어있음 true");
+		                	String deptName = (String) model.getValueAt(0, 0);
+		                	System.out.println("deptName 0,0"+deptName);
+		                	deptName = (String) model.getValueAt(1, 0);
+		                	System.out.println("deptName 1,0"+deptName);
+		                	// 추가리스트에 추가하는 소스코드 해야함
+		                	
+		                }else{
+		                	System.out.println("선택되어있지않음 false");
+		                	String deptName = (String) model.getValueAt(0, 0);
+		                	System.out.println("deptName 0,0"+deptName);
+		                	deptName = (String) model.getValueAt(1, 0);
+		                	System.out.println("deptName 1,0"+deptName);
+		                	// 추가리스트에서 삭제하는 소스코드해야함
+		                	
+		                }
+		                ((JTableHeader) e.getSource()).repaint();
+		            }
+		        }
+		    });
+		
+	}
+		@Override
+		public Component getTableCellRendererComponent(
+		        JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {
+		    TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();
+		    JLabel l = (JLabel) r.getTableCellRendererComponent(tbl, val, isS, hasF, row, col);
+		    l.setIcon(new CheckBoxIcon(check));
+		    return l;
+		}
+
+		
+	
+	}
+	
 	class CheckBoxModelListener1 implements TableModelListener {
 		public boolean isCellEditable(int i, int c) {
 			if (c != 1)
@@ -134,7 +197,8 @@ public class Exam2 extends JFrame {
 		public void tableChanged(TableModelEvent e) {
 			int row = e.getFirstRow();
 			int column = e.getColumn();
-			if (column == 3) {
+			
+			if(column == 3) {
 				TableModel model = (TableModel) e.getSource();
 				String deptName = (String) model.getValueAt(row, 0);
 				String rankName = (String) model.getValueAt(row, 1);
@@ -144,7 +208,11 @@ public class Exam2 extends JFrame {
 				if (checked) {
 					String s = deptName + ", " + rankName + ", " + nameName;
 					System.out.println(s);
-				} else {
+					// 추가리스트에 추가하는 소스코드 해야함
+					
+				} else{
+					// 추가리스트에 삭제하는 소스코드 해야함
+					
 				}
 
 			}
