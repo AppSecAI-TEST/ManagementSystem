@@ -28,6 +28,7 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				new Popup(self).setVisible(true);
 				dispose();
+				
 				try {
 					db.getData();
 				} catch (Exception e1) {

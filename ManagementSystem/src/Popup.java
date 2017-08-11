@@ -289,7 +289,6 @@ public class Popup extends JFrame {
 		this.setResizable(false);
 		this.setVisible(true);
 	}
-	
 	public static void main(String[] args) {
 		new Popup(null);
 	}
