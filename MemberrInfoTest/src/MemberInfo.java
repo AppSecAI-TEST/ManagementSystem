@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -48,12 +50,13 @@ public class MemberInfo extends JFrame {
 
 	private DefaultListModel addModel;
 	private JButton searchButton = new JButton("검색");
+	private JButton sendButton = new JButton("보내기");
 
 	// deptPanel 설정
 	private String[] columnNames = { "부서", "부서선택" };
-	private Object[][] data = { { "영업부", false }, { "인사부", false }, { "마케팅부", false }, { "개발부", false } }; 
-	/* 나중에 data 이부분도 db에서 처리해야함 (부서종류 뽑아오기)		*/																									
-																											
+	private Object[][] data = { { "영업부", false }, { "인사부", false }, { "마케팅부", false }, { "개발부", false } };
+	/* 나중에 data 이부분도 db에서 처리해야함 (부서종류 뽑아오기) */
+
 	private JTable table;
 	private DefaultTableModel model;
 	private JScrollPane scroll;
@@ -110,8 +113,31 @@ public class MemberInfo extends JFrame {
 
 		addList.setModel(addModel);
 		addPanel.add(new JScrollPane(addList), BorderLayout.CENTER);
-		addList.setSelectedIndex(0);// 리스트첫번째 항목이 선택되게함
-		westPanel.add(addPanel, BorderLayout.SOUTH);
+		westPanel.add(addPanel, BorderLayout.CENTER);
+		westPanel.add(sendButton, BorderLayout.SOUTH);
+		addList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index;
+				if (e.getClickCount() == 2) { // 더블클릭시
+					String s = (String) addList.getSelectedValue();
+					StringTokenizer tokens = new StringTokenizer(s);
+					String dept = tokens.nextToken(", ");
+					String rank = tokens.nextToken(", ");
+					String name = tokens.nextToken(", ");
+					index = addList.locationToIndex(e.getPoint());
+					addModel.remove(index);
+					for (int i = 0; i < model2.getRowCount(); i++) {
+						boolean result = model2.getValueAt(i, 0).equals(dept) && model2.getValueAt(i, 1).equals(rank)
+								&& model2.getValueAt(i, 2).equals(name);
+						if (result) {
+							model2.setValueAt(false, i, 3);
+							model2.fireTableDataChanged();
+						}
+					}
+				}
+			}
+		});
 	}
 
 	private void memberInit() {
@@ -139,7 +165,7 @@ public class MemberInfo extends JFrame {
 
 	private void memberAddInit(String checkDept) {
 		try {
-			//model2.setRowCount(0); //table에서 row전체삭제
+			// model2.setRowCount(0); //table에서 row전체삭제
 			for (Member m : db.selectData(checkDept)) {
 				model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 			}
@@ -147,19 +173,19 @@ public class MemberInfo extends JFrame {
 
 		}
 	}
-	
-	private void memberRemoveInit(String checkDept){
-		try{
-		int count = db.selectDeptPerson(checkDept);	
-		int startRow = model2.getRowCount()-1;
-		
-		while(count>0){
-			model2.removeRow(startRow);
-			startRow--;
-			count--;
-		}
-		}catch(Exception e){
-			
+
+	private void memberRemoveInit(String checkDept) {
+		try {
+			int count = db.selectDeptPerson(checkDept);
+			int startRow = model2.getRowCount() - 1;
+
+			while (count > 0) {
+				model2.removeRow(startRow);
+				startRow--;
+				count--;
+			}
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -201,36 +227,17 @@ public class MemberInfo extends JFrame {
 					int viewColumn = columnModel.getColumnIndexAtX(e.getX());
 					int modelColumn = table.convertColumnIndexToModel(viewColumn);
 					if (modelColumn == 3) {
-						check.setSelected(!check.isSelected()); // 지금선택의 반대로 true/false변경
+						check.setSelected(!check.isSelected()); // 지금선택의 반대로
+																// true/false변경
 						TableModel m = table.getModel();
 						Boolean f = check.isSelected();
 						for (int i = 0; i < m.getRowCount(); i++) {
 							m.setValueAt(f, i, 3);
 						}
-//						if (check.isSelected() == true) {	
-//							System.out.println("선택되어있음 true");
-//							
-//							String deptName = (String) model.getValueAt(0, 0);
-//							System.out.println("deptName 0,0" + deptName);
-//							deptName = (String) model.getValueAt(1, 0);
-//							System.out.println("deptName 1,0" + deptName);
-//							/* 추가리스트에 추가하는 소스코드 해야함 */
-//							
-//
-//						} else {
-//							System.out.println("선택되어있지않음 false");
-//							String deptName = (String) model.getValueAt(0, 0);
-//							System.out.println("deptName 0,0" + deptName);
-//							deptName = (String) model.getValueAt(1, 0);
-//							System.out.println("deptName 1,0" + deptName);
-//							/* 추가리스트에서 삭제하는 소스코드해야함 */
-//
-//						}
 						((JTableHeader) e.getSource()).repaint();
 					}
 				}
 			});
-
 		}
 
 		@Override
@@ -241,7 +248,6 @@ public class MemberInfo extends JFrame {
 			l.setIcon(new CheckBoxIcon(check));
 			return l;
 		}
-
 	}
 
 	class CheckBoxModelListener1 implements TableModelListener {
@@ -263,7 +269,7 @@ public class MemberInfo extends JFrame {
 
 				if (checked) {
 					memberAddInit(deptName);
-				}else{
+				} else {
 					memberRemoveInit(deptName);
 				}
 			}
@@ -293,16 +299,11 @@ public class MemberInfo extends JFrame {
 				String s = deptName + ", " + rankName + ", " + nameName;
 				System.out.println(s);
 
-				if (checked) {						
+				if (checked) {
 					addModel.addElement(s);
 					addList.ensureIndexIsVisible(addModel.getSize());
-					/* 추가리스트에 추가하는 소스코드 해야함 */
-
 				} else {
-					//addModel.removeElement(s,)
 					addModel.removeElement(s);
-					/* 추가리스트에 삭제하는 소스코드 해야함 */
-
 				}
 			}
 		}
@@ -314,7 +315,7 @@ public class MemberInfo extends JFrame {
 		addListInit();
 		memberInit();
 		deptInit();
-		
+
 		this.add(westPanel, BorderLayout.WEST);
 		this.add(deptPanel, BorderLayout.CENTER);
 		this.add(memberPanel, BorderLayout.EAST);
