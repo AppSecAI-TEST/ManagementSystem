@@ -50,7 +50,7 @@ public class Email extends JPanel{
 	private JScrollPane scroll = new JScrollPane(text);
 	private JButton send = new JButton("Àü¼Û");
 	
-	
+	//a
 	public void compInit() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
