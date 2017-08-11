@@ -1,0 +1,51 @@
+db설정
+
+select * from person;
+
+-------------------------------------------
+
+person테이블이 존재한다면
+
+drop table person;
+
+-------------------------------------------
+
+create table person(
+dept varchar2(15),
+rank varchar2(10),
+name varchar2(10),
+checkbox varchar2(5) );
+
+-------------------------------------------
+insert into person values('영업부', '대리','사람1','false');
+insert into person values('마케팅부', '대리','사람20','false');
+insert into person values('마케팅부', '사원','사람21','false');
+insert into person values('마케팅부', '대리','사람15','false');
+insert into person values('마케팅부', '과장','사람16','false');
+insert into person values('마케팅부', '사원','사람17','false');
+insert into person values('영업부', '과장','사람2','false');
+
+insert into person values('개발부', '대리','사람8','false');
+insert into person values('개발부', '과장','사람9','false');
+insert into person values('인사부', '대리','사람22','false');
+insert into person values('인사부', '과장','사람23','false');
+insert into person values('인사부', '사원','사람24','false');
+insert into person values('영업부', '사원','사람3','false');
+insert into person values('영업부', '사원','사람4','false');
+insert into person values('영업부', '부장','사람5','false');
+insert into person values('개발부', '부장','사람12','false');
+insert into person values('개발부', '대리','사람13','false');
+insert into person values('영업부', '대리','사람6','false');
+insert into person values('영업부', '사원','사람7','false');
+insert into person values('인사부', '사원','사람25','false');
+insert into person values('인사부', '부장','사람26','false');
+insert into person values('인사부', '대리','사람27','false');
+insert into person values('개발부', '사원','사람10','false');
+insert into person values('개발부', '사원','사람11','false');
+insert into person values('개발부', '사원','사람14','false');
+insert into person values('마케팅부', '사원','사람18','false');
+insert into person values('마케팅부', '부장','사람19','false');
+insert into person values('인사부', '사원','사람28','false');
+
+
+commit;
