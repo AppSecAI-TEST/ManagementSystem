@@ -1,8 +1,8 @@
 import java.sql.Date;
 
 public class Member {
-	private int MemberId;//ID
-	private int MemberPw;//PW
+	private String MemberId;//ID
+	private String MemberPw;//PW
 	private String MemberName;//이름
 	private String Email;//이메일
 	private Date MemberBirthday;//생년월일
@@ -14,7 +14,7 @@ public class Member {
 	private String Position;//직책
 	private String Rank;//직급
 	
-	public Member(int MemberId,int MemberPw,String MemberName,String Email,Date MemberBirthday,int CompanyPhone,int CellPhone,String Address,int Zipcode,String Department,String Position, String Rank){
+	public Member(String MemberId,String MemberPw,String MemberName,String Email,Date MemberBirthday,int CompanyPhone,int CellPhone,String Address,int Zipcode,String Department,String Position, String Rank){
 		this.MemberId = MemberId;
 		this.MemberPw = MemberPw;
 		this.MemberName = MemberName;
@@ -29,16 +29,16 @@ public class Member {
 		this.Rank = Rank;
 	}
 	
-	public int getMemberId() {
+	public String getMemberId() {
 		return MemberId;
 	}
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		MemberId = memberId;
 	}
-	public int getMemberPw() {
+	public String getMemberPw() {
 		return MemberPw;
 	}
-	public void setMemberPw(int memberPw) {
+	public void setMemberPw(String memberPw) {
 		MemberPw = memberPw;
 	}
 	public String getMemberName() {
