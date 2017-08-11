@@ -1,33 +1,20 @@
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
-import java.awt.MenuItem;
 import java.awt.Point;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.border.LineBorder;
-
-import org.w3c.dom.css.RGBColor;
 //TEST
 public class Popup extends JFrame {
 	Popup self = this;
@@ -223,8 +210,15 @@ public class Popup extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				contentPanel.add(report, "logout");
 				card.show(contentPanel, "logout");
+				//로그아웃
+				int reply = JOptionPane.showConfirmDialog(null, "로그아웃하시겠습니까?", "로그아웃", JOptionPane.YES_NO_OPTION);
+		        if (reply == JOptionPane.YES_OPTION) {
+		        	dispose();
+		        	Login login = new Login(self);
+		        	login.setVisible(true);
+		          }			
 			}
-		});	
+		});
 		
 		post5.addActionListener(new ActionListener() {			
 			@Override
