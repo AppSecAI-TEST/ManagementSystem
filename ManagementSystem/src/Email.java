@@ -27,10 +27,15 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.util.Properties;
+import java.util.Scanner;
+
 //a
-public class Email extends JPanel{
+public class Email extends JPanel {
 	Email self = this;
 	CardLayout ca;
+	Scanner sc = new Scanner(System.in);
+	String host = "smtp.naver.com";
 	private JFrame frm = new JFrame();
 	private JPanel panel = new JPanel();
 	private JPanel northPanel = new JPanel();
@@ -52,7 +57,7 @@ public class Email extends JPanel{
 	private JTextArea text = new JTextArea(17, 59);
 	private JScrollPane scroll = new JScrollPane(text);
 	private JButton send = new JButton("전송");
-	
+
 	public void compInit() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -84,27 +89,23 @@ public class Email extends JPanel{
 		c.gridy = 7;c.gridx = 3;
 		this.add(send, c);
 	}
-	public void eventInit(){
+
+	public void eventInit() {
 		this.AttachedFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.setCurrentDirectory(new File("c:/"));
-				if(e.getSource() == AttachedFile)
-		        {
-		            int returnVal = fileChooser.showOpenDialog(frm);
-		            if( returnVal == JFileChooser.APPROVE_OPTION)
-		            {
-		                File file = fileChooser.getSelectedFile();
-		                Attachedfile.setText(file.toString());
-		            }
-		            else
-		            {
-		            	Attachedfile.setText("파일을 열지 못했습니다");
-		            }
-		        }
-				
+				if (e.getSource() == AttachedFile) {
+					int returnVal = fileChooser.showOpenDialog(frm);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						Attachedfile.setText(file.toString());
+					} 
+				}
+
 			}
 		});
 	}
+
 	public Email() {
 		this.setSize(800, 700);
 		this.compInit();
