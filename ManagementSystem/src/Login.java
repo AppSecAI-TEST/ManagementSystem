@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 public class Login extends JFrame{
 	
 	DBManager db = new DBManager();
-	
 	Login self = this;
 	private JLabel ID = new JLabel("아이디: ");
 	private JLabel PassWord = new JLabel("패스워드: ");
@@ -57,7 +56,7 @@ public class Login extends JFrame{
 		c.gridy = 3;c.gridx = 2;
 		this.add(password, c);
 	}
-	public Login(){
+	public Login(Popup pop){//로그아웃
 		this.setTitle("로그인");
 		this.setSize(300, 350);
 		this.setLocationRelativeTo(null);
@@ -67,6 +66,6 @@ public class Login extends JFrame{
 		this.setVisible(true);
 	}
 	public static void main(String[] args) {
-		new Login();
+		new Login(null);
 	}
 }
