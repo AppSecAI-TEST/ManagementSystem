@@ -30,7 +30,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-public class MemberInfo extends JFrame {
+public class MemberInfo extends JPanel {
 	MemberInfo self = this;
 	private DBManager db = new DBManager();
 
@@ -376,11 +376,8 @@ public class MemberInfo extends JFrame {
 
 	public MemberInfo() {
 		this.setSize(900, 500);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.compInit();
 		this.eventInit();
-		this.setResizable(false);
 		this.setVisible(true);
 	}
 
