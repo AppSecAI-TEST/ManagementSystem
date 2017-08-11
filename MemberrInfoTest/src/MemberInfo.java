@@ -33,7 +33,9 @@ import javax.swing.table.TableModel;
 public class MemberInfo extends JFrame {
 	MemberInfo self = this;
 	private DBManager db = new DBManager();
+	
 
+	private int addPersonnum = 0;
 	private int tmp = 0;
 	private JPanel searchPanel = new JPanel(new BorderLayout());
 	private JPanel searchSubPanel = new JPanel(new GridBagLayout());
@@ -68,7 +70,7 @@ public class MemberInfo extends JFrame {
 	private JCheckBox box = new JCheckBox();
 
 	// memeberPanel 설정
-	private String[] columnNames2 = { "부서", "직급", "이름", "선택" };
+	private String[] columnNames2 = { "부서", "직급", "이름", "추가" };
 	private JTable table2;
 	private DefaultTableModel model2;
 	private JScrollPane scroll2;
@@ -132,6 +134,7 @@ public class MemberInfo extends JFrame {
 					String name = tokens.nextToken(", ");
 					index = addList.locationToIndex(e.getPoint());
 					addModel.remove(index);
+					totalPerson.setText("추가된 사람 : "+ addModel.getSize());
 					for (int i = 0; i < model2.getRowCount(); i++) {
 						boolean result = model2.getValueAt(i, 0).equals(dept) && model2.getValueAt(i, 1).equals(rank)
 								&& model2.getValueAt(i, 2).equals(name);
@@ -171,7 +174,7 @@ public class MemberInfo extends JFrame {
 	private void memberAddInit(String checkDept) {
 		try {
 			// model2.setRowCount(0); //table에서 row전체삭제
-			for (Member m : db.selectData(checkDept)) {
+			for (Person m : db.selectData(checkDept)) {
 				model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 			}
 		} catch (Exception e) {
@@ -274,6 +277,9 @@ public class MemberInfo extends JFrame {
 
 				if (checked) {
 					if(tmp==1){
+						deptText.setText("");
+						rankText.setText("");
+						nameText.setText("");
 						model2.setRowCount(0);
 						tmp=0;
 					}
@@ -310,9 +316,11 @@ public class MemberInfo extends JFrame {
 
 				if (checked) {
 					addModel.addElement(s);
+					totalPerson.setText("추가된 사람 : "+ addModel.getSize());
 					addList.ensureIndexIsVisible(addModel.getSize());
 				} else {
 					addModel.removeElement(s);
+					totalPerson.setText("추가된 사람 : "+ addModel.getSize());
 				}
 			}
 		}
@@ -320,6 +328,7 @@ public class MemberInfo extends JFrame {
 
 	public void compInit() {
 		this.setLayout(new BorderLayout());
+		westPanel.setPreferredSize(new Dimension(200, 500));
 		searchInit();
 		addListInit();
 		memberInit();
@@ -351,7 +360,7 @@ public class MemberInfo extends JFrame {
 						model.setValueAt(false, i, 1);
 					}
 					model2.setRowCount(0); //table에서 row전체삭제
-					for (Member m : db.searchData(msg)) {
+					for (Person m : db.searchData(msg)) {
 						model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 					}
 					tmp=1;

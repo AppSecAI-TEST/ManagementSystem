@@ -15,29 +15,29 @@ public class DBManager {
 		return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "java07", "java07");
 	}
 	
-	public Vector<Member> getAllData() throws Exception {
-		Connection con = this.getConnection();
-		Statement stat = con.createStatement();
-		ResultSet rs = stat.executeQuery("select * from person");
-
-		Vector<Member> result = new Vector<Member>();
-
-		while (rs.next()) {
-			String dept = rs.getString("dept");
-			String rank = rs.getString("rank");
-			String name = rs.getString("name");
-			String s = rs.getString("checkbox");
-			Boolean check;
-			if(s.equals("true")){
-				check = true;
-			}else
-				check = false;
-			result.add(new Member(dept,rank,name,check));
-		}
-		con.close();
-
-		return result;
-	}
+//	public ArrayList<Person> getAllData() throws Exception {
+//		Connection con = this.getConnection();
+//		Statement stat = con.createStatement();
+//		ResultSet rs = stat.executeQuery("select * from person");
+//
+//		Vector<Person> result = new Vector<Person>();
+//
+//		while (rs.next()) {
+//			String dept = rs.getString("dept");
+//			String rank = rs.getString("rank");
+//			String name = rs.getString("name");
+//			String s = rs.getString("checkbox");
+//			Boolean check;
+//			if(s.equals("true")){
+//				check = true;
+//			}else
+//				check = false;
+//			result.add(new Person(dept,rank,name,check));
+//		}
+//		con.close();
+//
+//		return result;
+//	}
 	
 	//부서당 사원수 가져오기
 			public int selectDeptPerson(String department) throws Exception {
@@ -60,12 +60,12 @@ public class DBManager {
 	
 	
 	//부서에 따라 사람 가져오기
-		public ArrayList<Member> selectData(String department) throws Exception {
+		public ArrayList<Person> selectData(String department) throws Exception {
 			Connection con = this.getConnection();
 			
 			String sql = "select * from person where dept = ?";
 			
-			ArrayList<Member> result = new ArrayList<Member>();
+			ArrayList<Person> result = new ArrayList<Person>();
 			
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,department);
@@ -80,7 +80,7 @@ public class DBManager {
 					check = true;
 				}else
 					check = false;
-				result.add(new Member(dept,rank,name,check)); 
+				result.add(new Person(dept,rank,name,check)); 
 				
 			}
 			con.close();
@@ -88,12 +88,12 @@ public class DBManager {
 		}
 		
 		//검색 
-		public ArrayList<Member> searchData(String msg) throws Exception  {
+		public ArrayList<Person> searchData(String msg) throws Exception  {
 				Connection con = this.getConnection();
 				
 				String sql = "select * from person where 1=1 ";
 				
-				ArrayList<Member> result = new ArrayList<Member>();
+				ArrayList<Person> result = new ArrayList<Person>();
 				System.out.println(msg);
 				
 				sql += msg;
@@ -110,7 +110,7 @@ public class DBManager {
 						check = true;
 					}else
 						check = false;
-					result.add(new Member(dept,rank,name,check)); 
+					result.add(new Person(dept,rank,name,check)); 
 					
 				}
 				con.close();
@@ -119,30 +119,4 @@ public class DBManager {
 		}
 	
 	
-
-//	public int insertData(Student param) throws Exception { 
-//
-//			Connection con = this.getConnection();
-//			
-//			String sql = "insert into student values(?, ?)"; 
-//			PreparedStatement pstmt = con.prepareStatement(sql);
-//			pstmt.setInt(1, param.getId());
-//			pstmt.setString(2, param.getName());
-//			int result =  pstmt.executeUpdate();
-//
-//			con.commit();
-//			con.close();
-//			return result;
-//	}
-//	
-//	public int deleteData(int id) throws Exception {
-//		Connection con = this.getConnection();
-//		String sql = "delete from student where id = ?"; 
-//		PreparedStatement pstmt = con.prepareStatement(sql);
-//		pstmt.setInt(1, id);
-//		int result =  pstmt.executeUpdate();
-//		con.commit();
-//		con.close();
-//		return result;
-//	}
 }
