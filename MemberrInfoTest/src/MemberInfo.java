@@ -174,7 +174,7 @@ public class MemberInfo extends JFrame {
 	private void memberAddInit(String checkDept) {
 		try {
 			// model2.setRowCount(0); //table에서 row전체삭제
-			for (Member m : db.selectData(checkDept)) {
+			for (Person m : db.selectData(checkDept)) {
 				model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 			}
 		} catch (Exception e) {
@@ -360,7 +360,7 @@ public class MemberInfo extends JFrame {
 						model.setValueAt(false, i, 1);
 					}
 					model2.setRowCount(0); //table에서 row전체삭제
-					for (Member m : db.searchData(msg)) {
+					for (Person m : db.searchData(msg)) {
 						model2.addRow(new Object[] { m.getDept(), m.getRank(), m.getName(), m.getCheckbox() });
 					}
 					tmp=1;

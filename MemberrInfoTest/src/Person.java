@@ -1,11 +1,11 @@
 import java.sql.Date;
 // 진짜 멤버 클래스 아닌 test용 멤버클래스
-public class Member {
+public class Person {
 	private String dept;
 	private String rank;
 	private String name;
 	private Boolean checkbox;
-	public Member(String dept, String rank, String name, Boolean checkbox) {
+	public Person(String dept, String rank, String name, Boolean checkbox) {
 		super();
 		this.dept = dept;
 		this.rank = rank;
